@@ -10,8 +10,7 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class TestObjectHelperTest {
 
@@ -64,13 +63,13 @@ public class TestObjectHelperTest {
         final TestModelBase actual = TestObjectHelper.createObject(testCase, TestModelBase.class);
 
         // assert
-        assertThat(actual, is(notNullValue()));
-        assertThat(actual.getStringAttr(), is(equalTo("Test String")));
-        assertThat(actual.getIntAttr(), is(equalTo(5)));
-        assertThat(actual.getDoubleAttr(), is(equalTo(3.21)));
-        assertThat(actual.isBooleanAttr(), is(equalTo(true)));
-        assertThat(actual.getStringAttr2(), is(equalTo("second test string")));
-        assertThat(actual.getEnumAttr(), is(equalTo(TestEnum.TYPE_B)));
+        assertThat(actual).isNotNull();
+        assertThat(actual.getStringAttr()).isEqualTo("Test String");
+        assertThat(actual.getIntAttr()).isEqualTo(5);
+        assertThat(actual.getDoubleAttr()).isEqualTo(3.21);
+        assertThat(actual.isBooleanAttr()).isEqualTo(true);
+        assertThat(actual.getStringAttr2()).isEqualTo("second test string");
+        assertThat(actual.getEnumAttr()).isEqualTo(TestEnum.TYPE_B);
     }
 
     /**
@@ -88,11 +87,11 @@ public class TestObjectHelperTest {
         final TestModelBase actual = TestObjectHelper.createObject(testCase, TestModelBase.class);
 
         // assert
-        assertThat(actual, is(notNullValue()));
-        assertThat(actual.getSubEntityAttr().isBoolAttr(), is(true));
-        assertThat(actual.getSubEntityAttr().getIntAttr(), is(38));
-        assertThat(actual.getSubEntityAttr().getStringAttr(), is(equalTo("sub entity test string")));
-        assertThat(actual.getSubEntityAttr().getEnumAttr(), is(equalTo(TestEnum.TYPE_C)));
+        assertThat(actual).isNotNull();
+        assertThat(actual.getSubEntityAttr().isBoolAttr()).isEqualTo(true);
+        assertThat(actual.getSubEntityAttr().getIntAttr()).isEqualTo(38);
+        assertThat(actual.getSubEntityAttr().getStringAttr()).isEqualTo("sub entity test string");
+        assertThat(actual.getSubEntityAttr().getEnumAttr()).isEqualTo(TestEnum.TYPE_C);
     }
 
     /**
@@ -111,12 +110,12 @@ public class TestObjectHelperTest {
         final TestModelBase actual = TestObjectHelper.createObject(testCase, TestModelBase.class);
 
         // assert
-        assertThat(actual, is(notNullValue()));
-        assertThat(actual.getSubEntityAttr2(), is(notNullValue()));
-        assertThat(actual.getSubEntityAttr2().isBoolAttr(), is(true));
-        assertThat(actual.getSubEntityAttr2().getIntAttr(), is(38));
-        assertThat(actual.getSubEntityAttr2().getStringAttr(), is(equalTo("sub entity test string")));
-        assertThat(actual.getSubEntityAttr2().getEnumAttr(), is(equalTo(TestEnum.TYPE_C)));
+        assertThat(actual).isNotNull();
+        assertThat(actual.getSubEntityAttr2()).isNotNull();
+        assertThat(actual.getSubEntityAttr2().isBoolAttr()).isEqualTo(true);
+        assertThat(actual.getSubEntityAttr2().getIntAttr()).isEqualTo(38);
+        assertThat(actual.getSubEntityAttr2().getStringAttr()).isEqualTo("sub entity test string");
+        assertThat(actual.getSubEntityAttr2().getEnumAttr()).isEqualTo(TestEnum.TYPE_C);
     }
 
     /**
@@ -134,12 +133,12 @@ public class TestObjectHelperTest {
         final TestModelBase actual = TestObjectHelper.createObject(testCase, TestModelBase.class);
 
         // assert
-        assertThat(actual, is(notNullValue()));
-        assertThat(actual.getSubEntityListAttr(), is(notNullValue()));
-        assertThat(actual.getSubEntityListAttr().size(), is(2));
-        assertThat(actual.getSubEntityListAttr().get(0).getIntAttr(), is(1));
-        assertThat(actual.getSubEntityListAttr().get(0).isBoolAttr(), is(true));
-        assertThat(actual.getSubEntityListAttr().get(1).getIntAttr(), is(2));
+        assertThat(actual).isNotNull();
+        assertThat(actual.getSubEntityListAttr()).isNotNull();
+        assertThat(actual.getSubEntityListAttr().size()).isEqualTo(2);
+        assertThat(actual.getSubEntityListAttr().get(0).getIntAttr()).isEqualTo(1);
+        assertThat(actual.getSubEntityListAttr().get(0).isBoolAttr()).isEqualTo(true);
+        assertThat(actual.getSubEntityListAttr().get(1).getIntAttr()).isEqualTo(2);
     }
 
     /**
@@ -158,12 +157,12 @@ public class TestObjectHelperTest {
         final TestModelBase actual = TestObjectHelper.createObject(testCase, TestModelBase.class);
 
         // assert
-        assertThat(actual, is(notNullValue()));
-        assertThat(actual.getSubEntityListAttr2(), is(notNullValue()));
-        assertThat(actual.getSubEntityListAttr2().size(), is(2));
-        assertThat(actual.getSubEntityListAttr2().get(0).getIntAttr(), is(1));
-        assertThat(actual.getSubEntityListAttr2().get(0).isBoolAttr(), is(true));
-        assertThat(actual.getSubEntityListAttr2().get(1).getIntAttr(), is(2));
+        assertThat(actual).isNotNull();
+        assertThat(actual.getSubEntityListAttr2()).isNotNull();
+        assertThat(actual.getSubEntityListAttr2().size()).isEqualTo(2);
+        assertThat(actual.getSubEntityListAttr2().get(0).getIntAttr()).isEqualTo(1);
+        assertThat(actual.getSubEntityListAttr2().get(0).isBoolAttr()).isEqualTo(true);
+        assertThat(actual.getSubEntityListAttr2().get(1).getIntAttr()).isEqualTo(2);
     }
 
     /**
@@ -187,23 +186,23 @@ public class TestObjectHelperTest {
         final TestModelBase actual = TestObjectHelper.createObject(testCase, base);
 
         // assert
-        assertThat(actual, is(notNullValue()));
-        assertThat(actual.getStringAttr(), is(equalTo("Test String")));
-        assertThat(actual.getIntAttr(), is(equalTo(-768)));
-        assertThat(actual.getDoubleAttr(), is(equalTo(3.21)));
-        assertThat(actual.isBooleanAttr(), is(equalTo(true)));
-        assertThat(actual.getStringAttr2(), is(equalTo("second test string")));
-        assertThat(actual.getEnumAttr(), is(equalTo(TestEnum.TYPE_B)));
-        assertThat(actual.getSubEntityAttr().isBoolAttr(), is(true));
-        assertThat(actual.getSubEntityAttr().getIntAttr(), is(38));
-        assertThat(actual.getSubEntityAttr().getStringAttr(), is(equalTo("sub entity test string")));
-        assertThat(actual.getSubEntityAttr().getEnumAttr(), is(equalTo(TestEnum.TYPE_C)));
+        assertThat(actual).isNotNull();
+        assertThat(actual.getStringAttr()).isEqualTo("Test String");
+        assertThat(actual.getIntAttr()).isEqualTo(-768);
+        assertThat(actual.getDoubleAttr()).isEqualTo(3.21);
+        assertThat(actual.isBooleanAttr()).isEqualTo(true);
+        assertThat(actual.getStringAttr2()).isEqualTo("second test string");
+        assertThat(actual.getEnumAttr()).isEqualTo(TestEnum.TYPE_B);
+        assertThat(actual.getSubEntityAttr().isBoolAttr()).isEqualTo(true);
+        assertThat(actual.getSubEntityAttr().getIntAttr()).isEqualTo(38);
+        assertThat(actual.getSubEntityAttr().getStringAttr()).isEqualTo("sub entity test string");
+        assertThat(actual.getSubEntityAttr().getEnumAttr()).isEqualTo(TestEnum.TYPE_C);
 
-        assertThat(actual.getSubEntityListAttr(), is(notNullValue()));
-        assertThat(actual.getSubEntityListAttr().size(), is(2));
-        assertThat(actual.getSubEntityListAttr().get(0).getIntAttr(), is(1));
-        assertThat(actual.getSubEntityListAttr().get(0).isBoolAttr(), is(true));
-        assertThat(actual.getSubEntityListAttr().get(1).getIntAttr(), is(2));
+        assertThat(actual.getSubEntityListAttr()).isNotNull();
+        assertThat(actual.getSubEntityListAttr().size()).isEqualTo(2);
+        assertThat(actual.getSubEntityListAttr().get(0).getIntAttr()).isEqualTo(1);
+        assertThat(actual.getSubEntityListAttr().get(0).isBoolAttr()).isEqualTo(true);
+        assertThat(actual.getSubEntityListAttr().get(1).getIntAttr()).isEqualTo(2);
     }
 
     /**
@@ -230,20 +229,20 @@ public class TestObjectHelperTest {
         final TestModelBase actual = TestObjectHelper.createObject(testCase, TestModelBase.class);
 
         // assert
-        assertThat(actual, is(notNullValue()));
-        assertThat(actual.getSubEntityListAttr2(), is(notNullValue()));
-        assertThat(actual.getSubEntityListAttr2().size(), is(2));
-        assertThat(actual.getSubEntityListAttr2().get(0).getIntAttr(), is(1));
-        assertThat(actual.getSubEntityListAttr2().get(0).isBoolAttr(), is(true));
-        assertThat(actual.getSubEntityListAttr2().get(1).getIntAttr(), is(2));
+        assertThat(actual).isNotNull();
+        assertThat(actual.getSubEntityListAttr2()).isNotNull();
+        assertThat(actual.getSubEntityListAttr2().size()).isEqualTo(2);
+        assertThat(actual.getSubEntityListAttr2().get(0).getIntAttr()).isEqualTo(1);
+        assertThat(actual.getSubEntityListAttr2().get(0).isBoolAttr()).isEqualTo(true);
+        assertThat(actual.getSubEntityListAttr2().get(1).getIntAttr()).isEqualTo(2);
 
         // check the sub-lists
-        assertThat(actual.getSubEntityListAttr2().get(0).getSubListAttr(), is(notNullValue()));
-        assertThat(actual.getSubEntityListAttr2().get(0).getSubListAttr().size(), is(2));
-        assertThat(actual.getSubEntityListAttr2().get(0).getSubListAttr().get(0).getIntAttr(), is(100));
-        assertThat(actual.getSubEntityListAttr2().get(0).getSubListAttr().get(1).isBoolAttr(), is(true));
-        assertThat(actual.getSubEntityListAttr2().get(1).getSubListAttr().size(), is(1));
-        assertThat(actual.getSubEntityListAttr2().get(1).getSubListAttr().get(0).getIntAttr(), is(99));
+        assertThat(actual.getSubEntityListAttr2().get(0).getSubListAttr()).isNotNull();
+        assertThat(actual.getSubEntityListAttr2().get(0).getSubListAttr().size()).isEqualTo(2);
+        assertThat(actual.getSubEntityListAttr2().get(0).getSubListAttr().get(0).getIntAttr()).isEqualTo(100);
+        assertThat(actual.getSubEntityListAttr2().get(0).getSubListAttr().get(1).isBoolAttr()).isEqualTo(true);
+        assertThat(actual.getSubEntityListAttr2().get(1).getSubListAttr().size()).isEqualTo(1);
+        assertThat(actual.getSubEntityListAttr2().get(1).getSubListAttr().get(0).getIntAttr()).isEqualTo(99);
     }
 
     /**
@@ -269,20 +268,20 @@ public class TestObjectHelperTest {
         final TestModelBase actual = TestObjectHelper.createObject(testCase, TestModelBase.class);
 
         // assert
-        assertThat(actual, is(notNullValue()));
-        assertThat(actual.getStringAttr(), is(equalTo("Test String")));
-        assertThat(actual.getIntAttr(), is(equalTo(5)));
-        assertThat(actual.getDoubleAttr(), is(equalTo(3.21)));
-        assertThat(actual.isBooleanAttr(), is(equalTo(true)));
-        assertThat(actual.getStringAttr2(), is(equalTo("second test string")));
-        assertThat(actual.getEnumAttr(), is(equalTo(TestEnum.TYPE_B)));
+        assertThat(actual).isNotNull();
+        assertThat(actual.getStringAttr()).isEqualTo("Test String");
+        assertThat(actual.getIntAttr()).isEqualTo(5);
+        assertThat(actual.getDoubleAttr()).isEqualTo(3.21);
+        assertThat(actual.isBooleanAttr()).isEqualTo(true);
+        assertThat(actual.getStringAttr2()).isEqualTo("second test string");
+        assertThat(actual.getEnumAttr()).isEqualTo(TestEnum.TYPE_B);
 
         // check the map
-        assertThat(actual.getMapAttr(), is(notNullValue()));
-        assertThat(actual.getMapAttr().size(), is(3));
-        assertThat(actual.getMapAttr().get("myKey"), is(equalTo("Hello")));
-        assertThat(actual.getMapAttr().get("yourKey"), is(equalTo("world")));
-        assertThat(actual.getMapAttr().get("ourKey"), is(equalTo("yeah!")));
+        assertThat(actual.getMapAttr()).isNotNull();
+        assertThat(actual.getMapAttr().size()).isEqualTo(3);
+        assertThat(actual.getMapAttr().get("myKey")).isEqualTo("Hello");
+        assertThat(actual.getMapAttr().get("yourKey")).isEqualTo("world");
+        assertThat(actual.getMapAttr().get("ourKey")).isEqualTo("yeah!");
     }
 
 }

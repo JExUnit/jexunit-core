@@ -15,8 +15,7 @@ import org.junit.runner.RunWith;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.IsEqual.equalTo;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Simple Test for the framework.
@@ -64,29 +63,29 @@ public class ArithmeticalTest {
 
     @Test
     public void testConfiguration() {
-        assertThat("Default configuration should be overridden by the properties of the jexunit.properties",
-                JExUnitConfig.getStringProperty(JExUnitConfig.ConfigKey.DATE_PATTERN), equalTo("MM/dd/yyyy"));
+        // "Default configuration should be overridden by the properties of the jexunit.properties"
+        assertThat(JExUnitConfig.getStringProperty(JExUnitConfig.ConfigKey.DATE_PATTERN)).isEqualTo("MM/dd/yyyy");
 
-        assertThat("Properties set in the @BeforeClass should be accessible via the JExUnitConfig",
-                JExUnitConfig.getStringProperty("mytest.configkey"), equalTo("test-value"));
+        // "Properties set in the @BeforeClass should be accessible via the JExUnitConfig"
+        assertThat(JExUnitConfig.getStringProperty("mytest.configkey")).isEqualTo("test-value");
     }
 
     @TestCommand("mul")
     public static void runMulCommand(final TestCase<?> testCase, final ArithmeticalTestObject testObject) {
         log.log(Level.INFO, "in test command: MUL!");
-        assertThat(testObject.getParam1() * testObject.getParam2(), equalTo(testObject.getResult()));
+        assertThat(testObject.getParam1() * testObject.getParam2()).isEqualTo(testObject.getResult());
     }
 
     @TestCommand("div")
     public static void runDivCommand(final TestCase<?> testCase, final ArithmeticalTestObject testObject) {
         log.log(Level.INFO, "in test command: DIV!");
-        assertThat(testObject.getParam1() / testObject.getParam2(), equalTo(testObject.getResult()));
+        assertThat(testObject.getParam1() / testObject.getParam2()).isEqualTo(testObject.getResult());
     }
 
     @Test
     public void simpleTest() {
         log.info("What about this test?");
-        assertThat(JExUnitConfig.getStringProperty("mytest.configkey"), equalTo("test-value"));
+        assertThat(JExUnitConfig.getStringProperty("mytest.configkey")).isEqualTo("test-value");
     }
 
 }

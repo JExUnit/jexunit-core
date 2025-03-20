@@ -11,8 +11,7 @@ import org.junit.runner.RunWith;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.IsEqual.equalTo;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Simple Test for the framework.
@@ -42,30 +41,26 @@ public class ArithmeticalBusinessEntityTest {
     @TestCommand(value = "add")
     public static void runAddCommand(final CustomTestObject testObject) {
         log.log(Level.INFO, "in test command: ADD!");
-        assertThat(testObject.getEntity().getParam1() + testObject.getEntity().getParam2(),
-                equalTo(testObject.getResult()));
+        assertThat(testObject.getEntity().getParam1() + testObject.getEntity().getParam2()).isEqualTo(testObject.getResult());
     }
 
     @TestCommand(value = "sub")
     public static void runSubCommand(final CustomTestObject testObject) {
         log.log(Level.INFO, "in test command: SUB!");
-        assertThat(testObject.getEntity().getParam1() - testObject.getEntity().getParam2(),
-                equalTo(testObject.getResult()));
+        assertThat(testObject.getEntity().getParam1() - testObject.getEntity().getParam2()).isEqualTo(testObject.getResult());
     }
 
     @TestCommand(value = "multiply")
     @TestCommand(value = "mul")
     public static void runMulCommand(final CustomTestObject testObject) {
         log.log(Level.INFO, "in test command: MUL!");
-        assertThat(testObject.getEntity().getParam1() * testObject.getEntity().getParam2(),
-                equalTo(testObject.getResult()));
+        assertThat(testObject.getEntity().getParam1() * testObject.getEntity().getParam2()).isEqualTo(testObject.getResult());
     }
 
     @TestCommands({@TestCommand(value = "divide"), @TestCommand(value = "div")})
     public static void runDivCommand(final CustomTestObject testObject) {
         log.log(Level.INFO, "in test command: DIV!");
-        assertThat(testObject.getEntity().getParam1() / testObject.getEntity().getParam2(),
-                equalTo(testObject.getResult()));
+        assertThat(testObject.getEntity().getParam1() / testObject.getEntity().getParam2()).isEqualTo(testObject.getResult());
     }
 
 }

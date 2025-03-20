@@ -10,8 +10,7 @@ import org.junit.BeforeClass;
 
 import java.util.logging.Logger;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.IsEqual.equalTo;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Simple Test for the framework.<br>
@@ -54,7 +53,7 @@ public class ArithmeticalFieldTest extends JExUnitBase {
     @TestCommand(value = "div")
     public static void runDivCommand(final TestCase<?> testCase, final ArithmeticalTestObject testObject) {
         log.info("in test command: DIV!");
-        assertThat(testObject.getParam1() / testObject.getParam2(), equalTo(testObject.getResult()));
+        assertThat(testObject.getParam1() / testObject.getParam2()).isEqualTo(testObject.getResult());
     }
 
 }

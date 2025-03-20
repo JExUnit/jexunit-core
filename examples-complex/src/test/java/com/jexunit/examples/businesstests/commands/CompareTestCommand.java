@@ -10,9 +10,7 @@ import com.jexunit.examples.businesstests.entity.MyComplexBusinessEntity;
 import java.math.BigDecimal;
 import java.util.Map;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test-Command implementation. This implements the command: COMPARE. This command will get the current entity out of
@@ -39,9 +37,9 @@ public class CompareTestCommand {
             final Object expected = TestObjectHelper.convertPropertyStringToObject(obj.getClass(),
                     entry.getValue().getValue());
             if (obj instanceof BigDecimal && expected instanceof BigDecimal) {
-                assertThat(((BigDecimal) obj).compareTo((BigDecimal) expected), is(0));
+                assertThat(((BigDecimal) obj).compareTo((BigDecimal) expected)).isEqualTo(0);
             } else {
-                assertThat(obj, is(equalTo(expected)));
+                assertThat(obj).isEqualTo(expected);
             }
         }
     }

@@ -8,8 +8,7 @@ import com.jexunit.examples.arithmeticaltests.model.ArithmeticalTestObject;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.IsEqual.equalTo;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Provide the Test-Commands for the Arithmetical tests.
@@ -30,17 +29,17 @@ public class ArithmeticalTestCommands {
         log.log(Level.INFO, "run command (testCase: {0})", testCase);
         switch (testCase.getTestCommand()) {
             case "ADD":
-                assertThat(val1 + val2, equalTo(result));
+                assertThat(val1 + val2).isEqualTo(result);
                 break;
             case "SUB":
             case "SUBTRACT":
-                assertThat(val1 - val2, equalTo(result));
+                assertThat(val1 - val2).isEqualTo(result);
                 break;
             case "MUL":
-                assertThat(val1 * val2, equalTo(result));
+                assertThat(val1 * val2).isEqualTo(result);
                 break;
             case "DIV":
-                assertThat(val1 / val2, equalTo(result));
+                assertThat(val1 / val2).isEqualTo(result);
                 break;
         }
     }
@@ -50,17 +49,17 @@ public class ArithmeticalTestCommands {
         log.log(Level.INFO, "run command with object (testCase: {0})", testCase);
         switch (testCase.getTestCommand()) {
             case "ADD":
-                assertThat(obj.getParam1() + obj.getParam2(), equalTo(obj.getResult()));
+                assertThat(obj.getParam1() + obj.getParam2()).isEqualTo(obj.getResult());
                 break;
             case "SUB":
             case "SUBTRACT":
-                assertThat(obj.getParam1() - obj.getParam2(), equalTo(obj.getResult()));
+                assertThat(obj.getParam1() - obj.getParam2()).isEqualTo(obj.getResult());
                 break;
             case "MUL":
-                assertThat(obj.getParam1() * obj.getParam2(), equalTo(obj.getResult()));
+                assertThat(obj.getParam1() * obj.getParam2()).isEqualTo(obj.getResult());
                 break;
             case "DIV":
-                assertThat(obj.getParam1() / obj.getParam2(), equalTo(obj.getResult()));
+                assertThat(obj.getParam1() / obj.getParam2()).isEqualTo(obj.getResult());
                 break;
         }
     }
@@ -69,13 +68,13 @@ public class ArithmeticalTestCommands {
     public void runAddCommand(final TestCase<?> testCase) throws Exception {
         log.info("in test command: ADD!");
         final ArithmeticalTestObject obj = TestObjectHelper.createObject(testCase, ArithmeticalTestObject.class);
-        assertThat(obj.getParam1() + obj.getParam2(), equalTo(obj.getResult()));
+        assertThat(obj.getParam1() + obj.getParam2()).isEqualTo(obj.getResult());
     }
 
     @TestCommand({"sub", "subtract"})
     public void runSubCommand(final TestCase<?> testCase, final ArithmeticalTestObject testObject) {
         log.info("in test command: " + testCase.getTestCommand() + "!");
-        assertThat(testObject.getParam1() - testObject.getParam2(), equalTo(testObject.getResult()));
+        assertThat(testObject.getParam1() - testObject.getParam2()).isEqualTo(testObject.getResult());
     }
 
 }

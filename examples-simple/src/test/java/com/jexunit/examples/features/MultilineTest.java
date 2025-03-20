@@ -11,8 +11,7 @@ import org.junit.runner.RunWith;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(JExUnit.class)
 public class MultilineTest {
@@ -37,56 +36,56 @@ public class MultilineTest {
 
     @TestCommand("createPersonMultiline")
     public static void createPersonMultiline(final TestCase<?> testCase) {
-        assertTrue(testCase.isMultiline());
+        assertThat(testCase.isMultiline()).isTrue();
         defaultMultilineValues = testCase.getMultilineValues();
     }
 
     @Test
     public void testMultilineValues() {
         // Drei Multiline-Zeilen hintereinander
-        assertEquals(3, multilineValues.size());
+        assertThat(multilineValues.size()).isEqualTo(3);
 
         // Sortierung wie im Excel
-        assertEquals("Max", multilineValues.get(0).get("firstname").getValue());
-        assertEquals("Manfred", multilineValues.get(1).get("firstname").getValue());
-        assertEquals("Rudi", multilineValues.get(2).get("firstname").getValue());
+        assertThat(multilineValues.get(0).get("firstname").getValue()).isEqualTo("Max");
+        assertThat(multilineValues.get(1).get("firstname").getValue()).isEqualTo("Manfred");
+        assertThat(multilineValues.get(2).get("firstname").getValue()).isEqualTo("Rudi");
 
         // Multiline-Spalte selbst ist nicht aufgeführt
-        assertEquals(4, multilineValues.get(0).values().size());
-        assertEquals(4, multilineValues.get(1).values().size());
-        assertEquals(4, multilineValues.get(2).values().size());
+        assertThat(multilineValues.get(0).values().size()).isEqualTo(4);
+        assertThat(multilineValues.get(1).values().size()).isEqualTo(4);
+        assertThat(multilineValues.get(2).values().size()).isEqualTo(4);
     }
 
     @Test
     public void testDefaultMultilineValues() {
         // Drei Multiline-Zeilen hintereinander
-        assertEquals(3, defaultMultilineValues.size());
+        assertThat(defaultMultilineValues.size()).isEqualTo(3);
 
 
         // Sortierung wie im Excel
-        assertEquals("Robert", defaultMultilineValues.get(0).get("firstname").getValue());
-        assertEquals("Simon", defaultMultilineValues.get(1).get("firstname").getValue());
-        assertEquals("Julian", defaultMultilineValues.get(2).get("firstname").getValue());
+        assertThat(defaultMultilineValues.get(0).get("firstname").getValue()).isEqualTo("Robert");
+        assertThat(defaultMultilineValues.get(1).get("firstname").getValue()).isEqualTo("Simon");
+        assertThat(defaultMultilineValues.get(2).get("firstname").getValue()).isEqualTo("Julian");
 
         // Multiline-Spalte selbst ist nicht aufgeführt
-        assertEquals(3, defaultMultilineValues.get(0).values().size());
-        assertEquals(3, defaultMultilineValues.get(1).values().size());
-        assertEquals(3, defaultMultilineValues.get(2).values().size());
+        assertThat(defaultMultilineValues.get(0).values().size()).isEqualTo(3);
+        assertThat(defaultMultilineValues.get(1).values().size()).isEqualTo(3);
+        assertThat(defaultMultilineValues.get(2).values().size()).isEqualTo(3);
     }
 
     @Test
     public void testSinglelineValues() {
         // Multiline-Zugriff auch bei Single-Line möglich
-        assertEquals(1, singleLineValues.size());
+        assertThat(singleLineValues.size()).isEqualTo(1);
 
         // Letzter Eintrag ist der aktuelle
-        assertEquals("Roberta", singleLineValues.get(0).get("firstname").getValue());
+        assertThat(singleLineValues.get(0).get("firstname").getValue()).isEqualTo("Roberta");
 
         // Multiline-Zeiger zeigt auf aktuellen Wert
-        assertEquals(singleLineValue, singleLineValues.get(0));
+        assertThat(singleLineValues.get(0)).isEqualTo(singleLineValue);
 
         // Multiline-Spalte selbst ist nicht aufgeführt
-        assertEquals(4, multilineValues.get(0).values().size());
+        assertThat(multilineValues.get(0).values().size()).isEqualTo(4);
     }
 
 }

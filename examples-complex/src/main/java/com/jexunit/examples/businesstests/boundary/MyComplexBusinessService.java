@@ -1,10 +1,10 @@
 package com.jexunit.examples.businesstests.boundary;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.jexunit.examples.businesstests.control.MyComplexBusinessController;
 import com.jexunit.examples.businesstests.entity.MyComplexBusinessEntity;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This is the "very complex" business service of this example. <br>

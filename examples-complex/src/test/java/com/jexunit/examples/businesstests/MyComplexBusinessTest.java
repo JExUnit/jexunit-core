@@ -1,8 +1,5 @@
 package com.jexunit.examples.businesstests;
 
-import org.junit.runner.RunWith;
-
-import com.jexunit.core.JExUnit;
 import com.jexunit.core.dataprovider.ExcelFile;
 
 /**
@@ -12,7 +9,6 @@ import com.jexunit.core.dataprovider.ExcelFile;
  * @author fabian
  * 
  */
-@RunWith(JExUnit.class)
 public class MyComplexBusinessTest {
 
 	@ExcelFile

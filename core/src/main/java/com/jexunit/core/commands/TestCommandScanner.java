@@ -1,18 +1,17 @@
 package com.jexunit.core.commands;
 
-import com.jexunit.core.JExUnit;
 import com.jexunit.core.JExUnitConfig;
 import com.jexunit.core.commands.Command.Type;
 import com.jexunit.core.commands.annotation.TestCommand;
 import com.jexunit.core.commands.annotation.TestCommand.TestCommands;
 import eu.infomas.annotation.AnnotationDetector.MethodReporter;
 import eu.infomas.annotation.AnnotationDetector.TypeReporter;
-import org.junit.runner.RunWith;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -37,18 +36,10 @@ public class TestCommandScanner implements TypeReporter, MethodReporter {
     public void reportMethodAnnotation(final Class<? extends Annotation> annotation, final String className, final String methodName) {
         try {
             final Class<?> clazz = getClass().getClassLoader().loadClass(className);
-            Class<?> type = null;
-            if (clazz.isAnnotationPresent(RunWith.class)) {
-                final RunWith rwa = clazz.getAnnotation(RunWith.class);
-                if (rwa.value() == JExUnit.class) {
-                    type = clazz;
-                }
-            }
-
             if (annotation.isAnnotation() && (annotation == TestCommand.class || annotation == TestCommands.class)) {
                 for (final Method m : clazz.getDeclaredMethods()) {
                     final TestCommand[] testCommands = m.getDeclaredAnnotationsByType(TestCommand.class);
-                    registerCommands(testCommands, type, m);
+                    registerCommands(testCommands, clazz, m);
                 }
             }
         } catch (final ClassNotFoundException e) {
@@ -177,29 +168,33 @@ public class TestCommandScanner implements TypeReporter, MethodReporter {
      * Get the Command for the given command-name and type.
      *
      * @param command the excel-command
-     * @param clazz   the type of the test-class
+     * @param clazzes   the type of the test-class
      * @return the command for the given class, if found, else null
      */
-    static Command getTestCommand(final String command, final Class<?> clazz) {
+    static Command getTestCommand(final String command, final List<Class<?>> clazzes) {
         if (commands.containsKey(command)) {
             final Map<Class<?>, Command> cmds = commands.get(command);
 
             if (cmds != null && !cmds.isEmpty()) {
-                if (clazz == null) {
+                if (clazzes == null || clazzes.isEmpty()) {
                     if (cmds.containsKey(null)) {
                         return cmds.get(null);
+                    } else if (cmds.size() == 1) {
+                        return cmds.values().stream().findFirst().orElseThrow();
                     }
                 } else {
                     // not found? check superclass
-                    Class<?> cls = clazz;
-                    do {
-                        if (cmds.containsKey(cls)) {
-                            final Command c = cmds.get(cls);
-                            if (c.getType() == Type.CLASS || c.getImplementation() == cls) {
-                                return c;
+                    for (final Class<?> clazz : clazzes) {
+                        Class<?> cls = clazz;
+                        do {
+                            if (cmds.containsKey(cls)) {
+                                final Command c = cmds.get(cls);
+                                if (c.getType() == Type.CLASS || c.getImplementation() == cls) {
+                                    return c;
+                                }
                             }
-                        }
-                    } while ((cls = cls.getSuperclass()) != Object.class);
+                        } while ((cls = cls.getSuperclass()) != Object.class);
+                    }
                 }
                 return cmds.get(null);
             }

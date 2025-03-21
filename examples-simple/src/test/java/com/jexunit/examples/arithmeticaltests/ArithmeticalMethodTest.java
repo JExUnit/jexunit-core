@@ -3,8 +3,8 @@ package com.jexunit.examples.arithmeticaltests;
 import com.jexunit.core.JExUnitBase;
 import com.jexunit.core.dataprovider.ExcelFile;
 import com.jexunit.core.model.TestCase;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,12 +26,12 @@ public class ArithmeticalMethodTest extends JExUnitBase {
 
     private static final Logger log = Logger.getLogger(ArithmeticalMethodTest.class.getName());
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         log.info("BeforeClass - ArithmeticTests");
     }
 
-    @Before
+    @BeforeEach
     public void init() {
         log.info("Before - ArithmeticTests");
     }

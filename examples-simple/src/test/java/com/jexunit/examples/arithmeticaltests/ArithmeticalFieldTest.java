@@ -5,8 +5,8 @@ import com.jexunit.core.commands.annotation.TestCommand;
 import com.jexunit.core.dataprovider.ExcelFile;
 import com.jexunit.core.model.TestCase;
 import com.jexunit.examples.arithmeticaltests.model.ArithmeticalTestObject;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 
 import java.util.logging.Logger;
 
@@ -35,12 +35,12 @@ public class ArithmeticalFieldTest extends JExUnitBase {
     @ExcelFile
     static String excelFile = "src/test/resources/ArithmeticalTests.xlsx";
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         log.info("BeforeClass - ArithmeticTests");
     }
 
-    @Before
+    @BeforeEach
     public void init() {
         log.info("Before - ArithmeticTests");
     }

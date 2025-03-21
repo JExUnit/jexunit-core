@@ -3,7 +3,7 @@ package com.jexunit.core.data;
 import com.jexunit.core.data.entity.TestModelBase;
 import com.jexunit.core.data.entity.TestModelSub;
 import ognl.OgnlException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

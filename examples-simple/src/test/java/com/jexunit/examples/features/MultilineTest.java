@@ -1,19 +1,16 @@
 package com.jexunit.examples.features;
 
-import com.jexunit.core.JExUnit;
 import com.jexunit.core.commands.annotation.TestCommand;
 import com.jexunit.core.dataprovider.ExcelFile;
 import com.jexunit.core.model.TestCase;
 import com.jexunit.core.model.TestCell;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(JExUnit.class)
 public class MultilineTest {
 
     @ExcelFile

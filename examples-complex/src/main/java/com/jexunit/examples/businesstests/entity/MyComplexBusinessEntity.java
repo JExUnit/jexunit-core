@@ -2,11 +2,7 @@ package com.jexunit.examples.businesstests.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * This entity represents a "very complex" business entity ;).

@@ -44,7 +44,7 @@ public class TestCommandRunner {
 
         // check, which method to run for the current TestCommand
         final Command testCommand = TestCommandScanner.getTestCommand(testCase.getTestCommand().toLowerCase(),
-                testBase.getTestType());
+                testBase.getTestTypes());
         if (testCommand != null) {
             // set the default value for fastFail if not set in the testCase
             if (testCase.getFastFail() == null) {

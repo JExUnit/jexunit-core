@@ -1,12 +1,10 @@
 package com.jexunit.examples.arithmeticaltests;
 
-import com.jexunit.core.JExUnit;
 import com.jexunit.core.JExUnitBase;
 import com.jexunit.core.commands.annotation.TestCommand;
 import com.jexunit.core.commands.annotation.TestCommand.TestCommands;
 import com.jexunit.core.dataprovider.ExcelFile;
 import com.jexunit.examples.arithmeticaltests.model.CustomTestObject;
-import org.junit.runner.RunWith;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,7 +28,6 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * @author fabian
  */
-@RunWith(JExUnit.class)
 public class ArithmeticalBusinessEntityTest {
 
     private static Logger log = Logger.getLogger(ArithmeticalBusinessEntityTest.class.getName());

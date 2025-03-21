@@ -1,9 +1,7 @@
 package com.jexunit.examples.masstests;
 
-import com.jexunit.core.JExUnit;
 import com.jexunit.core.JExUnitBase;
 import com.jexunit.core.dataprovider.ExcelFile;
-import org.junit.runner.RunWith;
 
 /**
  * Simple Test for the framework.
@@ -28,7 +26,6 @@ import org.junit.runner.RunWith;
  *
  * @author fabian
  */
-@RunWith(JExUnit.class)
 public class MassArrayMethodTest {
 
     @ExcelFile(worksheetAsTest = false)

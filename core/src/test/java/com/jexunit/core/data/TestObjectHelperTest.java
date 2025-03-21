@@ -4,8 +4,8 @@ import com.jexunit.core.data.entity.TestEnum;
 import com.jexunit.core.data.entity.TestModelBase;
 import com.jexunit.core.model.TestCase;
 import com.jexunit.core.model.TestCell;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +20,7 @@ public class TestObjectHelperTest {
     private static Map<String, TestCell> testValuesList = new HashMap<>();
     private static Map<String, TestCell> testValuesList2 = new HashMap<>();
 
-    @BeforeClass
+    @BeforeAll
     public static void prepare() {
         testValuesBase.put("intAttr", new TestCell("A", "5"));
         testValuesBase.put("doubleAttr", new TestCell("B", "3.21"));

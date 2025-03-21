@@ -1,12 +1,10 @@
 package com.jexunit.examples.features;
 
-import com.jexunit.core.JExUnit;
 import com.jexunit.core.JExUnitConfig;
 import com.jexunit.core.commands.annotation.TestCommand;
 import com.jexunit.core.dataprovider.ExcelFile;
 import com.jexunit.core.model.TestCase;
 import org.assertj.core.api.Assertions;
-import org.junit.runner.RunWith;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,7 +12,6 @@ import java.util.HashMap;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(JExUnit.class)
 public class FormattingTest {
 
     @ExcelFile(worksheetAsTest = false)

@@ -1,7 +1,7 @@
 package com.jexunit.core.dataprovider;
 
 import com.jexunit.core.model.TestCase;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.nio.file.Paths;
 import java.util.List;

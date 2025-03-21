@@ -1,9 +1,8 @@
 package com.jexunit.examples.masstests;
 
-import com.jexunit.core.JExUnit;
 import com.jexunit.core.JExUnitBase;
 import com.jexunit.core.dataprovider.ExcelFile;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.TestFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +31,6 @@ import java.util.List;
  *
  * @author fabian
  */
-@RunWith(JExUnit.class)
 public class MassListMethodTest {
 
     @ExcelFile(worksheetAsTest = false)
@@ -41,6 +39,11 @@ public class MassListMethodTest {
         excelFiles.add("src/test/resources/MassTests.xlsx");
         excelFiles.add("src/test/resources/MassTests2.xlsx");
         return excelFiles;
+    }
+
+    @TestFactory
+    Object test() {
+        return JExUnitBase.register(false, false, "src/test/resources/MassTests.xlsx", "src/test/resources/MassTests2.xlsx");
     }
 
 }

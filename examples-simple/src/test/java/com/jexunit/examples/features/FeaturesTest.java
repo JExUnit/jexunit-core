@@ -1,13 +1,9 @@
 package com.jexunit.examples.features;
 
-import org.junit.Ignore;
-import org.junit.runner.RunWith;
-
-import com.jexunit.core.JExUnit;
 import com.jexunit.core.dataprovider.ExcelFile;
+import org.junit.jupiter.api.Disabled;
 
-@Ignore("How to test the fast fail feature?")
-@RunWith(JExUnit.class)
+@Disabled("How to test the fast fail feature?")
 public class FeaturesTest {
 
 	@ExcelFile

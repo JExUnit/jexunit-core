@@ -1,13 +1,10 @@
 package com.jexunit.examples.masstests;
 
+import com.jexunit.core.JExUnitBase;
+import com.jexunit.core.dataprovider.ExcelFile;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import org.junit.runner.RunWith;
-
-import com.jexunit.core.JExUnitBase;
-import com.jexunit.core.JExUnit;
-import com.jexunit.core.dataprovider.ExcelFile;
 
 /**
  * Simple Test for the framework.
@@ -34,7 +31,6 @@ import com.jexunit.core.dataprovider.ExcelFile;
  * @author fabian
  * 
  */
-@RunWith(JExUnit.class)
 public class MassListTest {
 
 	@ExcelFile(worksheetAsTest = false)

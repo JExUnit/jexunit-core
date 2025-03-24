@@ -1,25 +1,29 @@
 package com.jexunit.examples.features;
 
+import com.jexunit.core.JExUnitBase;
 import com.jexunit.core.commands.annotation.TestCommand;
-import com.jexunit.core.dataprovider.ExcelFile;
 import com.jexunit.core.model.TestCase;
 import com.jexunit.core.model.TestCell;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class MultilineTest {
-
-    @ExcelFile
-    static String[] excelFiles = new String[]{"src/test/resources/MultilineTest.xlsx"};
 
     private static List<Map<String, TestCell>> multilineValues;
     private static List<Map<String, TestCell>> singleLineValues;
     private static Map<String, TestCell> singleLineValue;
     private static List<Map<String, TestCell>> defaultMultilineValues;
+
+    @TestFactory
+    @Order(1)
+    Object testMultiline() {
+        return JExUnitBase.builder().paths(List.of("src/test/resources/MultilineTest.xlsx")).build().register();
+    }
 
     @TestCommand("createPerson")
     public static void createPerson(final TestCase<?> testCase) {
@@ -38,6 +42,7 @@ public class MultilineTest {
     }
 
     @Test
+    @Order(2)
     public void testMultilineValues() {
         // Drei Multiline-Zeilen hintereinander
         assertThat(multilineValues.size()).isEqualTo(3);
@@ -54,6 +59,7 @@ public class MultilineTest {
     }
 
     @Test
+    @Order(3)
     public void testDefaultMultilineValues() {
         // Drei Multiline-Zeilen hintereinander
         assertThat(defaultMultilineValues.size()).isEqualTo(3);
@@ -71,6 +77,7 @@ public class MultilineTest {
     }
 
     @Test
+    @Order(4)
     public void testSinglelineValues() {
         // Multiline-Zugriff auch bei Single-Line möglich
         assertThat(singleLineValues.size()).isEqualTo(1);

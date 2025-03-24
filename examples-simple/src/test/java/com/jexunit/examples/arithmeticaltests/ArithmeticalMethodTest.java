@@ -1,12 +1,11 @@
 package com.jexunit.examples.arithmeticaltests;
 
 import com.jexunit.core.JExUnitBase;
-import com.jexunit.core.dataprovider.ExcelFile;
 import com.jexunit.core.model.TestCase;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestFactory;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -22,7 +21,7 @@ import java.util.logging.Logger;
  *
  * @author fabian
  */
-public class ArithmeticalMethodTest extends JExUnitBase {
+public class ArithmeticalMethodTest {
 
     private static final Logger log = Logger.getLogger(ArithmeticalMethodTest.class.getName());
 
@@ -36,15 +35,13 @@ public class ArithmeticalMethodTest extends JExUnitBase {
         log.info("Before - ArithmeticTests");
     }
 
-    @ExcelFile
-    public static String getExcelFile() {
-        return "src/test/resources/ArithmeticalTests.xlsx";
-    }
-
-    @Override
-    public void runCommand(final TestCase<?> testCase) throws Exception {
-        log.log(Level.INFO, "running test-command: {0}", testCase.getTestCommand());
-        ArithmeticalTestCommands.runCommand(testCase);
+    @TestFactory
+    Object test() {
+        return JExUnitBase.builder()
+                .path("src/test/resources/ArithmeticalTests.xlsx")
+                .testType(ArithmeticalTest.class)
+                .testType(ArithmeticalTestCommands.class)
+                .build().register();
     }
 
 }

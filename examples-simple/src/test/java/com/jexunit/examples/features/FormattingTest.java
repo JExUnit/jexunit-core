@@ -1,10 +1,11 @@
 package com.jexunit.examples.features;
 
+import com.jexunit.core.JExUnitBase;
 import com.jexunit.core.JExUnitConfig;
 import com.jexunit.core.commands.annotation.TestCommand;
-import com.jexunit.core.dataprovider.ExcelFile;
 import com.jexunit.core.model.TestCase;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.TestFactory;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,8 +15,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class FormattingTest {
 
-    @ExcelFile(worksheetAsTest = false)
-    static String[] excelFiles = new String[]{"src/test/resources/FormattingTest.xlsx"};
+    @TestFactory
+    Object test() {
+        return JExUnitBase.builder().path("src/test/resources/FormattingTest.xlsx").build().register();
+    }
 
     @TestCommand("map")
     public static void runMap(final TestCase<?> testCase, final HashMap<String, String> params) {

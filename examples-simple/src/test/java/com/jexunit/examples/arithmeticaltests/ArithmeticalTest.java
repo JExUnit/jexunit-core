@@ -3,12 +3,12 @@ package com.jexunit.examples.arithmeticaltests;
 import com.jexunit.core.JExUnitBase;
 import com.jexunit.core.JExUnitConfig;
 import com.jexunit.core.commands.annotation.TestCommand;
-import com.jexunit.core.dataprovider.ExcelFile;
 import com.jexunit.core.model.TestCase;
 import com.jexunit.examples.arithmeticaltests.model.ArithmeticalTestObject;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestFactory;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -44,9 +44,15 @@ public class ArithmeticalTest {
 
     private static final Logger log = Logger.getLogger(ArithmeticalTest.class.getName());
 
-    @ExcelFile
-    static String[] excelFiles = new String[]{"src/test/resources/ArithmeticalTests.xlsx",
-            "src/test/resources/ArithmeticalTests2.xlsx"};
+    @TestFactory
+    Object test() {
+        return JExUnitBase.builder()
+                .path("src/test/resources/ArithmeticalTests.xlsx")
+                .path("src/test/resources/ArithmeticalTests2.xlsx")
+                .testType(ArithmeticalTestCommands.class)
+                .testType(this.getClass())
+                .build().register();
+    }
 
     @BeforeAll
     public static void configure() {

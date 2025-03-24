@@ -3,8 +3,8 @@ package com.jexunit.examples.arithmeticaltests;
 import com.jexunit.core.JExUnitBase;
 import com.jexunit.core.commands.annotation.TestCommand;
 import com.jexunit.core.commands.annotation.TestCommand.TestCommands;
-import com.jexunit.core.dataprovider.ExcelFile;
 import com.jexunit.examples.arithmeticaltests.model.CustomTestObject;
+import org.junit.jupiter.api.TestFactory;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,8 +32,13 @@ public class ArithmeticalBusinessEntityTest {
 
     private static Logger log = Logger.getLogger(ArithmeticalBusinessEntityTest.class.getName());
 
-    @ExcelFile
-    static String excelFile = "src/test/resources/ArithmeticalBusinessEntityTests.xlsx";
+    @TestFactory
+    Object test() {
+        return JExUnitBase.builder()
+                .testType(this.getClass())
+                .path("src/test/resources/ArithmeticalBusinessEntityTests.xlsx")
+                .build().register();
+    }
 
     @TestCommand(value = "add")
     public static void runAddCommand(final CustomTestObject testObject) {

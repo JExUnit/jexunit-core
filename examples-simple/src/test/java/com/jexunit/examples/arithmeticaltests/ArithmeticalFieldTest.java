@@ -2,11 +2,11 @@ package com.jexunit.examples.arithmeticaltests;
 
 import com.jexunit.core.JExUnitBase;
 import com.jexunit.core.commands.annotation.TestCommand;
-import com.jexunit.core.dataprovider.ExcelFile;
 import com.jexunit.core.model.TestCase;
 import com.jexunit.examples.arithmeticaltests.model.ArithmeticalTestObject;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestFactory;
 
 import java.util.logging.Logger;
 
@@ -28,11 +28,10 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * @author fabian
  */
-public class ArithmeticalFieldTest extends JExUnitBase {
+public class ArithmeticalFieldTest {
 
     private static final Logger log = Logger.getLogger(ArithmeticalFieldTest.class.getName());
 
-    @ExcelFile
     static String excelFile = "src/test/resources/ArithmeticalTests.xlsx";
 
     @BeforeAll
@@ -45,9 +44,13 @@ public class ArithmeticalFieldTest extends JExUnitBase {
         log.info("Before - ArithmeticTests");
     }
 
-    @Override
-    public void runCommand(final TestCase<?> testCase) throws Exception {
-        ArithmeticalTestCommands.runCommand(testCase);
+    @TestFactory
+    Object testArithmeticalField() {
+        return JExUnitBase.builder()
+                .testType(this.getClass())
+                .testType(ArithmeticalTest.class)
+                .testType(ArithmeticalTestCommands.class)
+                .path(excelFile).build().register();
     }
 
     @TestCommand(value = "div")

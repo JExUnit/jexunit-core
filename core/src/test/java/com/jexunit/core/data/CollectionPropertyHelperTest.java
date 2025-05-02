@@ -3,9 +3,8 @@ package com.jexunit.core.data;
 import com.jexunit.core.data.entity.TestModelBase;
 import com.jexunit.core.data.entity.TestModelSub;
 import ognl.OgnlException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class CollectionPropertyHelperTest {
 
@@ -33,8 +32,8 @@ public class CollectionPropertyHelperTest {
 
         OgnlUtils.setPropertyToObject(tmb, propertyCondition, "12");
 
-        assertThat(tmb.getSubEntityListAttr().get(0).getIntAttr()).isEqualTo(1);
-        assertThat(tmb.getSubEntityListAttr().get(1).getIntAttr()).isEqualTo(7);
-        assertThat(tmb.getSubEntityListAttr().get(2).getIntAttr()).isEqualTo(12);
+        Assertions.assertEquals(1, tmb.getSubEntityListAttr().get(0).getIntAttr());
+        Assertions.assertEquals(7, tmb.getSubEntityListAttr().get(1).getIntAttr());
+        Assertions.assertEquals(12, tmb.getSubEntityListAttr().get(2).getIntAttr());
     }
 }

@@ -6,20 +6,18 @@ import com.jexunit.core.data.TestObjectHelper;
 import com.jexunit.core.model.TestCase;
 import com.jexunit.core.model.TestCell;
 import com.jexunit.examples.businesstests.entity.MyComplexBusinessEntity;
+import org.junit.jupiter.api.Assertions;
 
 import java.math.BigDecimal;
 import java.util.Map;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test-Command implementation. This implements the command: COMPARE. This command will get the current entity out of
  * the TestContext and compare it with the properties out of the excel-file (TestCase). The JExUnit-Framework will be
  * used to "inject" the objects needed.
- *
- * @author fabian
  */
 @TestCommand("compare")
+@SuppressWarnings("unused")
 public class CompareTestCommand {
 
     /**
@@ -28,7 +26,7 @@ public class CompareTestCommand {
      *
      * @param testCase the current testCase
      * @param actual   the current business entity
-     * @throws Exception
+     * @throws Exception if any error occurs during comparison
      */
     public void compare(@Context final TestCase<?> testCase,
                         @Context final MyComplexBusinessEntity actual) throws Exception {
@@ -36,10 +34,11 @@ public class CompareTestCommand {
             final Object obj = TestObjectHelper.getProperty(actual, entry.getKey());
             final Object expected = TestObjectHelper.convertPropertyStringToObject(obj.getClass(),
                     entry.getValue().getValue());
+
             if (obj instanceof BigDecimal && expected instanceof BigDecimal) {
-                assertThat(((BigDecimal) obj).compareTo((BigDecimal) expected)).isEqualTo(0);
+                Assertions.assertEquals(0, ((BigDecimal) obj).compareTo((BigDecimal) expected));
             } else {
-                assertThat(obj).isEqualTo(expected);
+                Assertions.assertEquals(expected, obj);
             }
         }
     }

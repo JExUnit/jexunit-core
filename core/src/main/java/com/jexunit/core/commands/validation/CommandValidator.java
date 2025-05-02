@@ -3,14 +3,13 @@ package com.jexunit.core.commands.validation;
 import com.jexunit.core.JExUnitConfig;
 import com.jexunit.core.commands.TestCommandScanner;
 import com.jexunit.core.model.TestCase;
+import org.junit.jupiter.api.Assertions;
 
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static org.assertj.core.api.Assertions.fail;
 
 public class CommandValidator {
 
@@ -40,7 +39,7 @@ public class CommandValidator {
                                         testCase.getComment() == null ? "" : testCase.getComment()});
                         iterator.remove();
                     } else if (validationType == ValidationType.FAIL) {
-                        fail(String.format("TestCommand %s is not valid.", testCase.getTestCommand()));
+                        Assertions.fail(String.format("TestCommand %s is not valid.", testCase.getTestCommand()));
                     }
                 }
             }

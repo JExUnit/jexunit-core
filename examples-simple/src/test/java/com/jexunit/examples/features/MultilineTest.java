@@ -9,8 +9,6 @@ import org.junit.jupiter.api.*;
 import java.util.List;
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class MultilineTest {
 
@@ -26,6 +24,7 @@ public class MultilineTest {
     }
 
     @TestCommand("createPerson")
+    @SuppressWarnings("unused")
     public static void createPerson(final TestCase<?> testCase) {
         if (testCase.isMultiline()) {
             multilineValues = testCase.getMultilineValues();
@@ -36,8 +35,9 @@ public class MultilineTest {
     }
 
     @TestCommand("createPersonMultiline")
+    @SuppressWarnings("unused")
     public static void createPersonMultiline(final TestCase<?> testCase) {
-        assertThat(testCase.isMultiline()).isTrue();
+        Assertions.assertTrue(testCase.isMultiline());
         defaultMultilineValues = testCase.getMultilineValues();
     }
 
@@ -45,51 +45,50 @@ public class MultilineTest {
     @Order(2)
     public void testMultilineValues() {
         // Drei Multiline-Zeilen hintereinander
-        assertThat(multilineValues.size()).isEqualTo(3);
+        Assertions.assertEquals(3, multilineValues.size());
 
         // Sortierung wie im Excel
-        assertThat(multilineValues.get(0).get("firstname").getValue()).isEqualTo("Max");
-        assertThat(multilineValues.get(1).get("firstname").getValue()).isEqualTo("Manfred");
-        assertThat(multilineValues.get(2).get("firstname").getValue()).isEqualTo("Rudi");
+        Assertions.assertEquals("Max", multilineValues.get(0).get("firstname").getValue());
+        Assertions.assertEquals("Manfred", multilineValues.get(1).get("firstname").getValue());
+        Assertions.assertEquals("Rudi", multilineValues.get(2).get("firstname").getValue());
 
         // Multiline-Spalte selbst ist nicht aufgeführt
-        assertThat(multilineValues.get(0).values().size()).isEqualTo(4);
-        assertThat(multilineValues.get(1).values().size()).isEqualTo(4);
-        assertThat(multilineValues.get(2).values().size()).isEqualTo(4);
+        Assertions.assertEquals(4, multilineValues.get(0).values().size());
+        Assertions.assertEquals(4, multilineValues.get(1).values().size());
+        Assertions.assertEquals(4, multilineValues.get(2).values().size());
     }
 
     @Test
     @Order(3)
     public void testDefaultMultilineValues() {
         // Drei Multiline-Zeilen hintereinander
-        assertThat(defaultMultilineValues.size()).isEqualTo(3);
-
+        Assertions.assertEquals(3, defaultMultilineValues.size());
 
         // Sortierung wie im Excel
-        assertThat(defaultMultilineValues.get(0).get("firstname").getValue()).isEqualTo("Robert");
-        assertThat(defaultMultilineValues.get(1).get("firstname").getValue()).isEqualTo("Simon");
-        assertThat(defaultMultilineValues.get(2).get("firstname").getValue()).isEqualTo("Julian");
+        Assertions.assertEquals("Robert", defaultMultilineValues.get(0).get("firstname").getValue());
+        Assertions.assertEquals("Simon", defaultMultilineValues.get(1).get("firstname").getValue());
+        Assertions.assertEquals("Julian", defaultMultilineValues.get(2).get("firstname").getValue());
 
         // Multiline-Spalte selbst ist nicht aufgeführt
-        assertThat(defaultMultilineValues.get(0).values().size()).isEqualTo(3);
-        assertThat(defaultMultilineValues.get(1).values().size()).isEqualTo(3);
-        assertThat(defaultMultilineValues.get(2).values().size()).isEqualTo(3);
+        Assertions.assertEquals(3, defaultMultilineValues.get(0).values().size());
+        Assertions.assertEquals(3, defaultMultilineValues.get(1).values().size());
+        Assertions.assertEquals(3, defaultMultilineValues.get(2).values().size());
     }
 
     @Test
     @Order(4)
     public void testSinglelineValues() {
         // Multiline-Zugriff auch bei Single-Line möglich
-        assertThat(singleLineValues.size()).isEqualTo(1);
+        Assertions.assertEquals(1, singleLineValues.size());
 
         // Letzter Eintrag ist der aktuelle
-        assertThat(singleLineValues.get(0).get("firstname").getValue()).isEqualTo("Roberta");
+        Assertions.assertEquals("Roberta", singleLineValues.getFirst().get("firstname").getValue());
 
         // Multiline-Zeiger zeigt auf aktuellen Wert
-        assertThat(singleLineValues.get(0)).isEqualTo(singleLineValue);
+        Assertions.assertEquals(singleLineValue, singleLineValues.getFirst());
 
         // Multiline-Spalte selbst ist nicht aufgeführt
-        assertThat(multilineValues.get(0).values().size()).isEqualTo(4);
+        Assertions.assertEquals(4, multilineValues.getFirst().values().size());
     }
 
 }

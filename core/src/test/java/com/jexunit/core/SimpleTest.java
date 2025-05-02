@@ -1,7 +1,7 @@
 package com.jexunit.core;
 
 import com.jexunit.core.commands.annotation.TestCommand;
-import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DynamicNode;
 import org.junit.jupiter.api.TestFactory;
 
@@ -17,13 +17,15 @@ public class SimpleTest {
     }
 
     @TestCommand(value = "multiply")
-    public static void runMulCommand(SumObj obj) throws Exception {
-        Assertions.assertThat(obj.val1 * obj.val2).isEqualTo(obj.result);
+    @SuppressWarnings("unused")
+    public static void runMulCommand(SumObj obj) {
+        Assertions.assertEquals(obj.val1 * obj.val2, obj.result);
     }
 
     @TestCommand(value = "sum")
-    public static void sumCommand(SumObj obj) throws Exception {
-        Assertions.assertThat(obj.val1 + obj.val2).isEqualTo(obj.result);
+    @SuppressWarnings("unused")
+    public static void sumCommand(SumObj obj) {
+        Assertions.assertEquals(obj.val1 + obj.val2, obj.result);
     }
 
 }

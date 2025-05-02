@@ -4,13 +4,12 @@ import com.jexunit.core.JExUnitBase;
 import com.jexunit.core.commands.annotation.TestCommand;
 import com.jexunit.core.model.TestCase;
 import com.jexunit.examples.arithmeticaltests.model.ArithmeticalTestObject;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestFactory;
 
 import java.util.logging.Logger;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Simple Test for the framework.<br>
@@ -25,12 +24,11 @@ import static org.assertj.core.api.Assertions.assertThat;
  * <p>
  * All the other test-commands will be handled by the overridden {@link #runCommand(TestCase)} method.
  * </p>
- *
- * @author fabian
  */
 public class ArithmeticalFieldTest {
 
     private static final Logger log = Logger.getLogger(ArithmeticalFieldTest.class.getName());
+    private static final double DELTA = 0.000001;
 
     static String excelFile = "src/test/resources/ArithmeticalTests.xlsx";
 
@@ -53,10 +51,12 @@ public class ArithmeticalFieldTest {
                 .path(excelFile).build().register();
     }
 
-    @TestCommand(value = "div")
+    @TestCommand("div")
+    @SuppressWarnings("unused")
     public static void runDivCommand(final TestCase<?> testCase, final ArithmeticalTestObject testObject) {
         log.info("in test command: DIV!");
-        assertThat(testObject.getParam1() / testObject.getParam2()).isEqualTo(testObject.getResult());
+        double actual = testObject.getParam1() / testObject.getParam2();
+        Assertions.assertEquals(testObject.getResult(), actual, DELTA);
     }
 
 }

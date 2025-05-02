@@ -252,7 +252,7 @@ public class TestCommandRunner {
             @SuppressWarnings("unchecked") final Class<Object> clazz = (Class<Object>) method.getDeclaringClass();
             Object instance = TestContextManager.get(clazz);
             if (instance == null) {
-                instance = clazz.newInstance();
+                instance = clazz.getDeclaredConstructor().newInstance();
                 TestContextManager.add(clazz, instance);
             }
             o = instance;

@@ -8,14 +8,14 @@ import com.jexunit.examples.arithmeticaltests.ArithmeticalTestCommands;
 import com.jexunit.examples.arithmeticaltests.model.ArithmeticalTestObject;
 import org.junit.jupiter.api.*;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Disabled("How to test the fast fail feature?")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class FeaturesTest {
 
 	static int executionsOfMulcommand = 0;
+	private static final double DELTA = 0.000001;
 
 	@TestFactory
 	@Order(1)
@@ -32,14 +32,15 @@ public class FeaturesTest {
 	@Order(2)
 	void testExecutionsOfMulcommand() {
 		// That test needs to be green to manually test the fast fail command
-		assertThat(executionsOfMulcommand).isEqualTo(1);
+		assertEquals(1, executionsOfMulcommand);
 	}
 
 	@TestCommand("mul")
+	@SuppressWarnings("unused")
 	public void runMulCommand(final TestCase<?> testCase, final ArithmeticalTestObject testObject) {
 		executionsOfMulcommand++;
-		assertThat(testObject.getParam1() * testObject.getParam2()).isEqualTo(testObject.getResult());
+		double actual = testObject.getParam1() * testObject.getParam2();
+		assertEquals(testObject.getResult(), actual, DELTA);
 	}
-
 
 }

@@ -1,9 +1,10 @@
 package com.jexunit.examples.masstests;
 
-import com.jexunit.core.JExUnit;
 import com.jexunit.core.JExUnitBase;
-import com.jexunit.core.dataprovider.ExcelFile;
-import org.junit.runner.RunWith;
+import com.jexunit.examples.arithmeticaltests.ArithmeticalTestCommands;
+import org.junit.jupiter.api.TestFactory;
+
+import java.util.List;
 
 /**
  * Simple Test for the framework.
@@ -29,11 +30,17 @@ import org.junit.runner.RunWith;
  *
  * @author fabian
  */
-@RunWith(JExUnit.class)
 public class MassTest {
 
-    @ExcelFile(worksheetAsTest = false)
-    static String[] excelFile = new String[]{"src/test/resources/MassTests.xlsx",
-            "src/test/resources/MassTests2.xlsx"};
+    @TestFactory
+    Object test() {
+        return JExUnitBase.builder()
+                .worksheetAsTest(false)
+                .testType(ArithmeticalTestCommands.class)
+                .paths(List.of(
+                "src/test/resources/MassTests.xlsx",
+                "src/test/resources/MassTests2.xlsx"
+        )).build().register();
+    }
 
 }

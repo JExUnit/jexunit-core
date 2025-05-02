@@ -2,16 +2,14 @@ package com.jexunit.examples.arithmeticaltests;
 
 import com.jexunit.core.JExUnitBase;
 import com.jexunit.core.commands.annotation.TestCommand;
-import com.jexunit.core.dataprovider.ExcelFile;
 import com.jexunit.core.model.TestCase;
 import com.jexunit.examples.arithmeticaltests.model.ArithmeticalTestObject;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestFactory;
 
 import java.util.logging.Logger;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.IsEqual.equalTo;
 
 /**
  * Simple Test for the framework.<br>
@@ -26,35 +24,39 @@ import static org.hamcrest.core.IsEqual.equalTo;
  * <p>
  * All the other test-commands will be handled by the overridden {@link #runCommand(TestCase)} method.
  * </p>
- *
- * @author fabian
  */
-public class ArithmeticalFieldTest extends JExUnitBase {
+public class ArithmeticalFieldTest {
 
     private static final Logger log = Logger.getLogger(ArithmeticalFieldTest.class.getName());
+    private static final double DELTA = 0.000001;
 
-    @ExcelFile
     static String excelFile = "src/test/resources/ArithmeticalTests.xlsx";
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         log.info("BeforeClass - ArithmeticTests");
     }
 
-    @Before
+    @BeforeEach
     public void init() {
         log.info("Before - ArithmeticTests");
     }
 
-    @Override
-    public void runCommand(final TestCase<?> testCase) throws Exception {
-        ArithmeticalTestCommands.runCommand(testCase);
+    @TestFactory
+    Object testArithmeticalField() {
+        return JExUnitBase.builder()
+                .testType(this.getClass())
+                .testType(ArithmeticalTest.class)
+                .testType(ArithmeticalTestCommands.class)
+                .path(excelFile).build().register();
     }
 
-    @TestCommand(value = "div")
+    @TestCommand("div")
+    @SuppressWarnings("unused")
     public static void runDivCommand(final TestCase<?> testCase, final ArithmeticalTestObject testObject) {
         log.info("in test command: DIV!");
-        assertThat(testObject.getParam1() / testObject.getParam2(), equalTo(testObject.getResult()));
+        double actual = testObject.getParam1() / testObject.getParam2();
+        Assertions.assertEquals(testObject.getResult(), actual, DELTA);
     }
 
 }

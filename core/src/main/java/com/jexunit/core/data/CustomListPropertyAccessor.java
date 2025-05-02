@@ -6,6 +6,7 @@ import ognl.OgnlContext;
 import ognl.OgnlException;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.Map;
@@ -67,8 +68,8 @@ public class CustomListPropertyAccessor extends ListPropertyAccessor {
             final Field listField = type.getDeclaredField(fieldname);
             final ParameterizedType listType = (ParameterizedType) listField.getGenericType();
             final Class<?> clazz = (Class<?>) listType.getActualTypeArguments()[0];
-            return clazz.newInstance();
-        } catch (final NoSuchFieldException | SecurityException | InstantiationException | IllegalAccessException e) {
+            return clazz.getDeclaredConstructor().newInstance();
+        } catch (final NoSuchFieldException | SecurityException | InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
         return null;

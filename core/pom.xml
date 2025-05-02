@@ -8,7 +8,7 @@ Developers design a "API" for the department so these specialists can write func
 	<parent>
 		<groupId>com.jexunit</groupId>
 		<artifactId>jexunit</artifactId>
-		<version>0.5.1-SNAPSHOT</version>
+		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>jexunit-core</artifactId>
@@ -17,18 +17,19 @@ Developers design a "API" for the department so these specialists can write func
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.22</version>
+			<version>1.18.36</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.13.2</version>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>5.12.1</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml</artifactId>
-			<version>4.1.2</version>
+			<version>5.4.0</version>
 		</dependency>
 		<dependency>
 			<groupId>eu.infomas</groupId>
@@ -44,13 +45,13 @@ Developers design a "API" for the department so these specialists can write func
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-configuration2</artifactId>
-			<version>2.10.1</version>
+			<version>2.11.0</version>
 		</dependency>
 		<!-- optional dependency in commons-configuration2 -->
 		<dependency>
 			<groupId>commons-beanutils</groupId>
 			<artifactId>commons-beanutils</artifactId>
-			<version>1.9.4</version>
+			<version>1.10.1</version>
 		</dependency>
 
 	</dependencies>

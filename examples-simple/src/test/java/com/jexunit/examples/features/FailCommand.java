@@ -2,7 +2,8 @@ package com.jexunit.examples.features;
 
 import com.jexunit.core.commands.annotation.TestCommand;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
+
 
 /**
  * Test-Command that only fails the test. This is used for testing the fastFail feature.

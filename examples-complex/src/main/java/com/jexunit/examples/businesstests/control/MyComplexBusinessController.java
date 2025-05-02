@@ -1,9 +1,9 @@
 package com.jexunit.examples.businesstests.control;
 
+import com.jexunit.examples.businesstests.entity.MyComplexBusinessEntity;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-
-import com.jexunit.examples.businesstests.entity.MyComplexBusinessEntity;
 
 /**
  * This is the controller class for running the "very complex" calculations ;).

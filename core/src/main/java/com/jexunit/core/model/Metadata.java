@@ -22,9 +22,20 @@ public class Metadata {
 	 * Identifier for the test case.
 	 */
 	private String identifier;
+	/**
+	 * Identifier for the test case.
+	 */
+	private String fileName;
 
 	public String getDetailedIdentifier() {
 		return String.format("identifier: %s", identifier);
 	}
 
+	public String getTestExecutionName() {
+		return "test[%s - %s [%s]]".formatted(fileName, testGroup, identifier);
+	}
+
+	public String getTestGroupName() {
+		return "[%s - %s [%s]]".formatted(fileName, testGroup, identifier);
+	}
 }

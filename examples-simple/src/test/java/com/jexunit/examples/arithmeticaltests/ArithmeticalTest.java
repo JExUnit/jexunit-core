@@ -1,92 +1,72 @@
 package com.jexunit.examples.arithmeticaltests;
 
-import com.jexunit.core.JExUnit;
 import com.jexunit.core.JExUnitBase;
 import com.jexunit.core.JExUnitConfig;
 import com.jexunit.core.commands.annotation.TestCommand;
-import com.jexunit.core.dataprovider.ExcelFile;
 import com.jexunit.core.model.TestCase;
 import com.jexunit.examples.arithmeticaltests.model.ArithmeticalTestObject;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.*;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.IsEqual.equalTo;
-
 /**
  * Simple Test for the framework.
- * <p>
- * This test doesn't extend the base-class ({@link JExUnitBase}). This test works with the
- * <code>@RunWith(GevoTester.class)</code>-Annotation as the integration point for the framework.
- * </p>
- * <p>
- * This test should provide the arithmetical operations MUL and DIV. In this version the automatic object-creation /
- * -matching mechanism is tested. The test-command-methods get the testCase and a model-object as parameters. The
- * model-objects will automatically be created by the framework. Therefore the parameter-names in the excel-file will be
- * matched to the attribute-names of the model-class.
- * </p>
- * <p>
- * The test-command DIV will also be found in another class (that works as an ExcelCommandProvider), but in this test,
- * the method/test-command defined in the class itself should be used!
- * </p>
- * <p>
- * The operations ADD and SUB will be provided by another ExcelCommandProvider.
- * </p>
- * <p>
- * As add-on, there is an additional "normal" JUnit-Test(-Method), to test, if this method won't be ignored!
- * </p>
- *
- * @author fabian
  */
-@RunWith(JExUnit.class)
 public class ArithmeticalTest {
 
     private static final Logger log = Logger.getLogger(ArithmeticalTest.class.getName());
+    private static final double DELTA = 0.000001;
 
-    @ExcelFile
-    static String[] excelFiles = new String[]{"src/test/resources/ArithmeticalTests.xlsx",
-            "src/test/resources/ArithmeticalTests2.xlsx"};
+    @TestFactory
+    Object test() {
+        return JExUnitBase.builder()
+                .path("src/test/resources/ArithmeticalTests.xlsx")
+                .path("src/test/resources/ArithmeticalTests2.xlsx")
+                .testType(ArithmeticalTestCommands.class)
+                .testType(this.getClass())
+                .build().register();
+    }
 
-    @BeforeClass
+    @BeforeAll
     public static void configure() {
         JExUnitConfig.setConfigProperty("mytest.configkey", "test-value");
     }
 
-    @Before
+    @BeforeEach
     public void init() {
         log.log(Level.INFO, "BeforeClass - ArithmeticTests");
     }
 
     @Test
     public void testConfiguration() {
-        assertThat("Default configuration should be overridden by the properties of the jexunit.properties",
-                JExUnitConfig.getStringProperty(JExUnitConfig.ConfigKey.DATE_PATTERN), equalTo("MM/dd/yyyy"));
+        // "Default configuration should be overridden by the properties of the jexunit.properties"
+        Assertions.assertEquals("MM/dd/yyyy", JExUnitConfig.getStringProperty(JExUnitConfig.ConfigKey.DATE_PATTERN));
 
-        assertThat("Properties set in the @BeforeClass should be accessible via the JExUnitConfig",
-                JExUnitConfig.getStringProperty("mytest.configkey"), equalTo("test-value"));
+        // "Properties set in the @BeforeClass should be accessible via the JExUnitConfig"
+        Assertions.assertEquals("test-value", JExUnitConfig.getStringProperty("mytest.configkey"));
     }
 
     @TestCommand("mul")
+    @SuppressWarnings("unused")
     public static void runMulCommand(final TestCase<?> testCase, final ArithmeticalTestObject testObject) {
         log.log(Level.INFO, "in test command: MUL!");
-        assertThat(testObject.getParam1() * testObject.getParam2(), equalTo(testObject.getResult()));
+        double actual = testObject.getParam1() * testObject.getParam2();
+        Assertions.assertEquals(testObject.getResult(), actual, DELTA);
     }
 
     @TestCommand("div")
+    @SuppressWarnings("unused")
     public static void runDivCommand(final TestCase<?> testCase, final ArithmeticalTestObject testObject) {
         log.log(Level.INFO, "in test command: DIV!");
-        assertThat(testObject.getParam1() / testObject.getParam2(), equalTo(testObject.getResult()));
+        double actual = testObject.getParam1() / testObject.getParam2();
+        Assertions.assertEquals(testObject.getResult(), actual, DELTA);
     }
 
     @Test
     public void simpleTest() {
         log.info("What about this test?");
-        assertThat(JExUnitConfig.getStringProperty("mytest.configkey"), equalTo("test-value"));
+        Assertions.assertEquals("test-value", JExUnitConfig.getStringProperty("mytest.configkey"));
     }
 
 }

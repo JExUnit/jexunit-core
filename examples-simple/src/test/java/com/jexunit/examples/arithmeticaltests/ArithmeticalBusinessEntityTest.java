@@ -1,18 +1,14 @@
 package com.jexunit.examples.arithmeticaltests;
 
-import com.jexunit.core.JExUnit;
 import com.jexunit.core.JExUnitBase;
 import com.jexunit.core.commands.annotation.TestCommand;
 import com.jexunit.core.commands.annotation.TestCommand.TestCommands;
-import com.jexunit.core.dataprovider.ExcelFile;
 import com.jexunit.examples.arithmeticaltests.model.CustomTestObject;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.TestFactory;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.IsEqual.equalTo;
 
 /**
  * Simple Test for the framework.
@@ -28,44 +24,51 @@ import static org.hamcrest.core.IsEqual.equalTo;
  * of the model-class. This will test the construction of (model-)object trees, to separate the
  * "test-entities" from the business-entities.
  * </p>
- *
- * @author fabian
  */
-@RunWith(JExUnit.class)
 public class ArithmeticalBusinessEntityTest {
 
-    private static Logger log = Logger.getLogger(ArithmeticalBusinessEntityTest.class.getName());
+    private static final Logger log = Logger.getLogger(ArithmeticalBusinessEntityTest.class.getName());
+    private static final double DELTA = 0.000001;
 
-    @ExcelFile
-    static String excelFile = "src/test/resources/ArithmeticalBusinessEntityTests.xlsx";
+    @TestFactory
+    Object test() {
+        return JExUnitBase.builder()
+                .testType(this.getClass())
+                .path("src/test/resources/ArithmeticalBusinessEntityTests.xlsx")
+                .build().register();
+    }
 
-    @TestCommand(value = "add")
+    @TestCommand("add")
+    @SuppressWarnings("unused")
     public static void runAddCommand(final CustomTestObject testObject) {
         log.log(Level.INFO, "in test command: ADD!");
-        assertThat(testObject.getEntity().getParam1() + testObject.getEntity().getParam2(),
-                equalTo(testObject.getResult()));
+        double actual = testObject.getEntity().getParam1() + testObject.getEntity().getParam2();
+        Assertions.assertEquals(testObject.getResult(), actual, DELTA);
     }
 
-    @TestCommand(value = "sub")
+    @TestCommand("sub")
+    @SuppressWarnings("unused")
     public static void runSubCommand(final CustomTestObject testObject) {
         log.log(Level.INFO, "in test command: SUB!");
-        assertThat(testObject.getEntity().getParam1() - testObject.getEntity().getParam2(),
-                equalTo(testObject.getResult()));
+        double actual = testObject.getEntity().getParam1() - testObject.getEntity().getParam2();
+        Assertions.assertEquals(testObject.getResult(), actual, DELTA);
     }
 
-    @TestCommand(value = "multiply")
-    @TestCommand(value = "mul")
+    @TestCommand("multiply")
+    @TestCommand("mul")
+    @SuppressWarnings("unused")
     public static void runMulCommand(final CustomTestObject testObject) {
         log.log(Level.INFO, "in test command: MUL!");
-        assertThat(testObject.getEntity().getParam1() * testObject.getEntity().getParam2(),
-                equalTo(testObject.getResult()));
+        double actual = testObject.getEntity().getParam1() * testObject.getEntity().getParam2();
+        Assertions.assertEquals(testObject.getResult(), actual, DELTA);
     }
 
-    @TestCommands({@TestCommand(value = "divide"), @TestCommand(value = "div")})
+    @TestCommands({@TestCommand("divide"), @TestCommand("div")})
+    @SuppressWarnings("unused")
     public static void runDivCommand(final CustomTestObject testObject) {
         log.log(Level.INFO, "in test command: DIV!");
-        assertThat(testObject.getEntity().getParam1() / testObject.getEntity().getParam2(),
-                equalTo(testObject.getResult()));
+        double actual = testObject.getEntity().getParam1() / testObject.getEntity().getParam2();
+        Assertions.assertEquals(testObject.getResult(), actual, DELTA);
     }
 
 }

@@ -12,6 +12,7 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.FileNotFoundException;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -22,7 +23,7 @@ import java.util.*;
  */
 public class ExcelLoader {
 
-    final boolean worksheetAsTest;
+     boolean worksheetAsTest;
     final boolean transpose;
 
     public ExcelLoader() {
@@ -76,7 +77,7 @@ public class ExcelLoader {
      */
     Map<String, List<TestCase<ExcelMetadata>>> readExcel(final String excelFilePath) throws Exception {
         final Map<String, List<TestCase<ExcelMetadata>>> tests = new LinkedHashMap<>();
-
+        String fileName = Paths.get(excelFilePath).getFileName().toString();
         String sheet = null;
         try (final OPCPackage pkg = OPCPackage.open(excelFilePath, PackageAccess.READ)) {
             final XSSFWorkbook workbook = new XSSFWorkbook(pkg);
@@ -84,7 +85,7 @@ public class ExcelLoader {
             // iterate through the worksheets
             for (final Sheet worksheet : workbook) {
                 sheet = worksheet.getSheetName();
-                final List<TestCase<ExcelMetadata>> testCases = readWorksheet(worksheet);
+                final List<TestCase<ExcelMetadata>> testCases = readWorksheet(fileName, worksheet);
 
                 tests.put(worksheet.getSheetName(), testCases);
             }
@@ -96,7 +97,7 @@ public class ExcelLoader {
         return tests;
     }
 
-    private List<TestCase<ExcelMetadata>> readWorksheet(final Sheet worksheet) throws Exception {
+    private List<TestCase<ExcelMetadata>> readWorksheet(String fileName, final Sheet worksheet) throws Exception {
         final List<List<Cell>> cells = new ArrayList<>();
 
         if (transpose) {
@@ -135,7 +136,7 @@ public class ExcelLoader {
                 }
             }
         }
-        return mapCells(cells);
+        return mapCells(fileName, cells);
     }
 
     private Pair<Integer, Integer> getLastRowAndLastColumn(final Sheet sheet) {
@@ -150,11 +151,12 @@ public class ExcelLoader {
     /**
      * Map given cells to test cases.
      *
-     * @param cells cells (read from excel worksheet - independent if transposed or not)
+     * @param fileName
+     * @param cells    cells (read from excel worksheet - independent if transposed or not)
      * @return list of test cases to be executed
      * @throws Exception
      */
-    private List<TestCase<ExcelMetadata>> mapCells(final List<List<Cell>> cells) throws Exception {
+    private List<TestCase<ExcelMetadata>> mapCells(String fileName, final List<List<Cell>> cells) throws Exception {
         final List<TestCase<ExcelMetadata>> testCases = new ArrayList<>();
 
         if (cells == null || cells.isEmpty()) {
@@ -197,6 +199,7 @@ public class ExcelLoader {
                     testCase.setTestCommand(cellValue);
                     testCase.getMetadata().setSheet(cell.getSheet().getSheetName());
                     testCase.getMetadata().setIdentifier(cell.getAddress().formatAsString());
+                    testCase.getMetadata().setFileName(fileName);
 
                     if (cellList.size() >= 1) {
                         final TestCell testCell = new TestCell();
@@ -224,6 +227,7 @@ public class ExcelLoader {
                         testCase = new TestCase<>(new ExcelMetadata());
                         testCase.getMetadata().setSheet(cell.getSheet().getSheetName());
                         testCase.getMetadata().setIdentifier(cell.getAddress().formatAsString());
+                        testCase.getMetadata().setFileName(fileName);
 
                         // the first column is always the command
                         testCase.setTestCommand(cellValue);
@@ -342,7 +346,7 @@ public class ExcelLoader {
                 } else {
                     final double number = cell.getNumericCellValue();
                     if ((number == Math.floor(number)) && !Double.isInfinite(number)) {
-                        return String.valueOf(new Double(number).intValue());
+                        return String.valueOf(Double.valueOf(number).intValue());
                     }
                     return String.valueOf(number);
                 }

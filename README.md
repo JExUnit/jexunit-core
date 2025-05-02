@@ -18,8 +18,7 @@ To use the JExUnit framework you have to do only three steps:
 
 1. Create a test class annotated with
     
-        @RunWith(JExUnit.class)
-
+        
 2. Add an attribute of type String, String[] or List<String> (or a static method returning one of these types) representing the excel-file(s) to "execute", annotated with
 
         @ExcelFile
@@ -33,8 +32,7 @@ Now you can write your tests in excel-sheets. If you run your test class as JUni
 
 ###### Simple example ######
 
-    @RunWith(JExUnit.class)
-    public class ArithmeticalTest {
+        public class ArithmeticalTest {
 
         private static Logger log = Logger.getLogger(ArithmeticalTest.class.getName());
 

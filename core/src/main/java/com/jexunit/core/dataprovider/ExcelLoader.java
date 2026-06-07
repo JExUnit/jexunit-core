@@ -342,7 +342,7 @@ public class ExcelLoader {
                 } else {
                     final double number = cell.getNumericCellValue();
                     if ((number == Math.floor(number)) && !Double.isInfinite(number)) {
-                        return String.valueOf(new Double(number).intValue());
+                        return String.valueOf(Double.valueOf(number).intValue());
                     }
                     return String.valueOf(number);
                 }

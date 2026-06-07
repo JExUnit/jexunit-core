@@ -3,7 +3,7 @@ package com.jexunit.core.dataprovider;
 import com.jexunit.core.model.TestCase;
 import org.junit.Test;
 
-import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +22,7 @@ public class ExcelLoaderTest {
     @Test
     public void shouldReadExcel() throws Exception {
         final ExcelLoader target = new ExcelLoader();
-        final Map<String, List<TestCase<ExcelMetadata>>> data = target.readExcel(Paths.get("", "src", "test", "resources", "loader-test.xlsx").toAbsolutePath().toString());
+        final Map<String, List<TestCase<ExcelMetadata>>> data = target.readExcel(Path.of("", "src", "test", "resources", "loader-test.xlsx").toAbsolutePath().toString());
         assertEquals(1, data.size());
         final List<TestCase<ExcelMetadata>> testCases = data.get("worksheet1");
         assertNotNull(testCases);
@@ -34,7 +34,7 @@ public class ExcelLoaderTest {
     @Test
     public void shouldReadExcelTransposed() throws Exception {
         final ExcelLoader target = new ExcelLoader(false, true);
-        final Map<String, List<TestCase<ExcelMetadata>>> data = target.readExcel(Paths.get("", "src", "test", "resources", "loader-test-transpose.xlsx").toAbsolutePath().toString());
+        final Map<String, List<TestCase<ExcelMetadata>>> data = target.readExcel(Path.of("", "src", "test", "resources", "loader-test-transpose.xlsx").toAbsolutePath().toString());
         assertEquals(1, data.size());
         final List<TestCase<ExcelMetadata>> testCases = data.get("worksheet1");
         assertNotNull(testCases);
